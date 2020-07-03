@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        span.tip {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            color: #46a6fe;
+            border: 1px solid #46a6fe;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .dialog {
+            position: fixed;
+            top: 100%;
+            left: 100%;
+            width: 500px;
+            height: 300px;
+            z-index: 9;
+            box-shadow: 0px 0px 18px rgba(0, 0, 0, .3);
+            background: #fff;
+        }
+
+        .dialog h3 {
+            margin: 0;
+            padding: 0 20px;
+            line-height: 42px;
+            font-weight: normal;
+            font-size: 16px;
+            border-bottom: 1px solid #999;
+        }
+
+        .dialog h3 span {
+            float: right;
+            color: #f00;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <span class="tip">消息通知</span>
+    <div class="dialog">
+        <h3>弹窗标题 <span class="close">关闭</span></h3>
+    </div>
+</body>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/draggabilly/2.3.0/draggabilly.pkgd.min.js"></script>
+<script>
+    var thisDialog = $(".dialog")
+    thisDialog.draggabilly()
+    $(".tip").on("click", function() {
+        var { left, top } = thisDialog.data()
+        thisDialog.animate({
+            left: typeof(left) != "undefined" ? left : (window.innerWidth - thisDialog.width()) / 2,
+            top: typeof(top) != "undefined" ? top : (window.innerHeight - thisDialog.height()) / 2,
+        })
+    })
+    $(".close").on("click", function() {
+        var { left, top } = thisDialog.position()
+        thisDialog.data({
+            left: left,
+            top: top
+        }).animate({
+            left: "100%",
+            top: "100%",
+        })
+    })
+</script>
+
+</html>
