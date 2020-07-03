@@ -20,6 +20,7 @@
             border: 1px solid #46a6fe;
             border-radius: 4px;
             cursor: pointer;
+            z-index: 99;
         }
 
         .dialog {
@@ -63,13 +64,19 @@
     var thisDialog = $(".dialog")
     thisDialog.draggabilly()
     $(".tip").on("click", function() {
+        thisDialog.hasClass("active") ? hideDialog() : showDialog()
+    })
+    $(".close").on("click", hideDialog)
+
+    function showDialog() {
         var { left, top } = thisDialog.data()
         thisDialog.animate({
             left: typeof(left) != "undefined" ? left : (window.innerWidth - thisDialog.width()) / 2,
             top: typeof(top) != "undefined" ? top : (window.innerHeight - thisDialog.height()) / 2,
-        })
-    })
-    $(".close").on("click", function() {
+        }).addClass("active")
+    }
+
+    function hideDialog() {
         var { left, top } = thisDialog.position()
         thisDialog.data({
             left: left,
@@ -77,8 +84,8 @@
         }).animate({
             left: "100%",
             top: "100%",
-        })
-    })
+        }).removeClass("active")
+    }
 </script>
 
 </html>
